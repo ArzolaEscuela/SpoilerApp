@@ -3,8 +3,8 @@
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
 
     <!-- Change the following strings as required -->
-    <string name="back4app_app_id">PASTE_YOUR_APPLICATION_ID_HERE</string>
-    <string name="back4app_client_key">PASTE_YOUR_CLIENT_KEY_HERE</string>
+    <string name="back4app_app_id">t1LCFuhzjFb28eAr5iz1UG4K0CdIghMOF33kgHL1</string>
+    <string name="back4app_client_key">Kn3Pxoi0m2JgV7dUNRQSLQqZJ64luQ562IY4DeP4</string>
 
     <string name="app_name">Android Quickstart Example</string>
 
