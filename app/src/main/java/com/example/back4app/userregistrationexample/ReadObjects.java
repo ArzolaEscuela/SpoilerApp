@@ -3,14 +3,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.RequiresPermission;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,21 +22,20 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 public class ReadObjects extends AppCompatActivity {
 
+    private String spoilerClassName() { return getResources().getString(R.string.spoiler_class_name); }
+private String spoilerUserIDColumn() { return getResources().getString(R.string.spoiler_column_user_id); }
+    private String spoilerSeriesNameColumn() { return getResources().getString(R.string.spoiler_column_title); }
+
     public ArrayList<String> dataList = new ArrayList<String>();
-    public String[] myArray = {};
+    public String[] entriesArray = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_objects);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
 
         final FloatingActionButton logout_button = (FloatingActionButton)findViewById(R.id.logout_button);
         logout_button.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +54,7 @@ public class ReadObjects extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,17 +85,17 @@ public class ReadObjects extends AppCompatActivity {
     }
 
     private void findObjects(){
-        myArray = new String[]{};
-        final ListView listView = (ListView) findViewById(R.id.listviewA);
+        entriesArray = new String[]{};
+        final ListView listView = (ListView) findViewById(R.id.listView);
 
         // Configure Query
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("reminderList");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(spoilerClassName());
 
         // Query Parameters
-        query.whereEqualTo("userId", ParseUser.getCurrentUser());
+        query.whereEqualTo(spoilerUserIDColumn(), ParseUser.getCurrentUser());
 
         // Sorts the results in ascending order by the itemName field
-        query.orderByAscending("itemName");
+        query.orderByAscending(spoilerSeriesNameColumn());
 
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -105,18 +103,18 @@ public class ReadObjects extends AppCompatActivity {
                 if (e == null){
                     // Adding objects into the Array
                     for(int i= 0 ; i < objects.size(); i++){
-                        String element = objects.get(i).getString("itemName");
+                        String element = objects.get(i).getString(spoilerSeriesNameColumn());
                         dataList.add(element.toString());
                     }
                 } else {
 
                 }
-                myArray = dataList.toArray(new String[dataList.size()]);
+                entriesArray = dataList.toArray(new String[dataList.size()]);
 
-                final ArrayList<String> list  = new ArrayList<String>(Arrays.asList(myArray));
+                final ArrayList<String> list  = new ArrayList<String>(Arrays.asList(entriesArray));
 
                 ArrayAdapter<String> adapterList
-                        = new ArrayAdapter<String>(ReadObjects.this, android.R.layout.simple_list_item_single_choice, myArray);
+                        = new ArrayAdapter<String>(ReadObjects.this, android.R.layout.simple_list_item_single_choice, entriesArray);
 
                 listView.setAdapter(adapterList);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,17 +126,17 @@ public class ReadObjects extends AppCompatActivity {
 
                         //Alert showing the options related with the object (Update or Delete)
                         AlertDialog.Builder builder = new AlertDialog.Builder(ReadObjects.this)
-                                .setTitle(value + " movie" )
+                                .setTitle(value )
                                 .setMessage("What do you want to do?")
                                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dataList.remove(position);
                                         deleteObject(value);
-                                        myArray = dataList.toArray(new String[dataList.size()]);
+                                        entriesArray = dataList.toArray(new String[dataList.size()]);
 
                                         ArrayAdapter<String> adapterList
-                                                = new ArrayAdapter<String>(ReadObjects.this, android.R.layout.simple_list_item_single_choice, myArray);
+                                                = new ArrayAdapter<String>(ReadObjects.this, android.R.layout.simple_list_item_single_choice, entriesArray);
 
                                         listView.setAdapter(adapterList);
                                     }
@@ -167,10 +165,10 @@ public class ReadObjects extends AppCompatActivity {
 
     // Delete object
     private void deleteObject(final String value) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("reminderList");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(spoilerClassName());
 
         // Query parameters based on the item name
-        query.whereEqualTo("itemName", value.toString());
+        query.whereEqualTo(spoilerSeriesNameColumn(), value.toString());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(final List<ParseObject> object, ParseException e) {

@@ -18,21 +18,24 @@
         tools:layout_alignParentTop="true"
         tools:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/btnCreate"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:textSize="30dp"
             android:layout_height="wrap_content"
-            android:text="Update Item" />
+            android:text="Update Entry"
+            android:layout_marginTop="16dp"/>
 
         <TextView
             android:id="@+id/txtItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Item ToDo"
+            android:text="Series Name To Spoil (Unique)"
             android:layout_marginTop="15dp"/>
 
         <EditText
-            android:id="@+id/edtItem"
+            android:id="@+id/edtSpoilerSeriesName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -43,18 +46,18 @@
             android:id="@+id/txtAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Additional Information"
+            android:text="Spoiler"
             android:layout_marginTop="15dp"/>
 
         <EditText
-            android:id="@+id/edtAdditionalInformation"
+            android:id="@+id/edtSpoilerContents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true" />
 
-        <Switch
+        <!--<Switch
             android:id="@+id/swiAvailable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +75,13 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"/>-->
+
+        <Button
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Item" />
 
     </LinearLayout>
 </ScrollView>
