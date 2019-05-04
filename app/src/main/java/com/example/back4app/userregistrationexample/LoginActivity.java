@@ -1,5 +1,6 @@
 package com.example.back4app.userregistrationexample;
 
+import android.support.annotation.RequiresPermission;
 import android.support.v7.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        Intent intent = new Intent(LoginActivity.this, LogoutActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, ReadObjects.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
